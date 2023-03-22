@@ -15,6 +15,10 @@ resource "docker_container" "dov-bear" {
         internal = 3000
         external = 3000 + count.index
     }
+    ports {
+        internal = 3100
+        external = 3100 + count.index
+    }
     env = [
         "INSTANCE_NAME=my-dov-bear"
     ]
