@@ -1,0 +1,8 @@
+{% for h in my_items %}
+    item: {{ h }}
+{% endfor %}
+
+List of my servers
+{% for h in groups['all'] %}
+   {{ h }}
+{% endfor %}

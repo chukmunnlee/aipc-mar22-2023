@@ -1,0 +1,30 @@
+Create a directory called workshop02 in your repo
+
+Setup the server with Terraform
+- provision a droplet in sgp1 region, ubuntu 20.04, 2Gb memory
+- add a SSH key
+- generate inventory.yaml file with the IP address, root, private key
+- use Ansible to ping your inventory.yaml, get from Slack #day02
+
+Install Code server play
+- update the OS to the latest patches
+    apt update
+    apt upgrade
+- create a directory in /usr/local/opt (file module)
+- Unzip the codeserver archive in /usr/local/opt (unarchive module)
+     make sure that you don't download it again if you have previously downloaded the archive
+- make directory /var/lib/code-server
+- symbolic link (file module)
+    ls -s /usr/local/opt/cs_dir /usr/lib/code-server
+    ln -s /usr/local/opt/cs_dir/bin/code-server /usr/bin/code-server
+- replace PASSWORD in code-server.service, copy the file to /lib/systemd/system 
+- start code server as service 
+    apt daemon-reload
+    apt enable code-server
+    apt start code-server
+
+Install Nginx
+- install Nginx
+- generate nginx config for domain, copy file to /etc/nginx/sites-available
+- sym link /etc/nginx/sites-available/code-server.conf to /etc/nginx/sites-enabled/code-server.conf 
+- restart Nginx

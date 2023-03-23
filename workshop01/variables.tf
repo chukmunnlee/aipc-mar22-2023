@@ -46,3 +46,12 @@ variable do_size {
     type = string
     default = "s-1vcpu-512mb-10gb"
 }
+
+variable do_ssh_key {
+    type = string 
+    default = "aipc"
+}
+
+variable ssh_private_key {
+    type = string
+}

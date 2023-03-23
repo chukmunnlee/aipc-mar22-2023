@@ -1,0 +1,28 @@
+- name: Connectivity test
+  hosts: all 
+  vars:
+    my_var: hello
+    to_install:
+      nginx: latest
+      mysql-client: absent
+    my_items:
+    - hello
+    - world
+  tasks:
+  - name: check if file exists
+    stat:
+      path: /tmp/date.txt
+    register: result
+
+  - name: echo result
+    debug:
+      msg: "{{ result }}"
+
+  - name: echo date
+    shell: 
+      cmd: "date > /tmp/date.txt"
+    when: not result.stat.exists
+  - name: generate template
+    template:
+      src: my-template.j2
+      dest: /tmp/template.txt

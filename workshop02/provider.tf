@@ -1,9 +1,5 @@
 terraform {
     required_providers {
-        docker = {
-            source = "kreuzwerker/docker"
-            version = "3.0.2"
-        }
         digitalocean = {
             source = "digitalocean/digitalocean"
             version = "2.26.0"
@@ -15,16 +11,8 @@ terraform {
     }
 }
 
-provider docker {
-    # host = "unix:///var/run/docker.sock"
-    host = "tcp://__IP_address__:2376"
-    cert_path = "__certificate_here__"
-}
-
 provider digitalocean {
-    # don't dp this
     token = var.do_token
-
 }
 
 provider local { }

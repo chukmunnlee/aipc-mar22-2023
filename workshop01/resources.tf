@@ -65,6 +65,54 @@ resource "local_file" "nginx-conf" {
     })
 }
 
+data "digitalocean_ssh_key" "aipc" {
+    name = var.do_ssh_key
+}
+
+resource "digitalocean_droplet" "nginx" {
+    name = "nginx"
+    image = var.do_image
+    region = var.do_region
+    size = var.do_size
+
+    ssh_keys = [ data.digitalocean_ssh_key.aipc.id ]
+
+    connection {
+      type = "ssh"
+      user = "root"
+      private_key = file(var.ssh_private_key)
+      host = self.ipv4_address
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "apt update -y",
+            "apt upgrade -y",
+            "apt install nginx -y",
+        ]
+    }
+    provisioner "file" {
+        source = local_file.nginx-conf.filename
+        destination = "/etc/nginx/nginx.conf"
+    }
+    provisioner "remote-exec" {
+        inline = [
+          "systemctl restart nginx",
+          "systemctl enable nginx",
+        ]
+    }
+}
+
+resource "local_file" "root_at_nginx" {
+    filename = "root@${digitalocean_droplet.nginx.ipv4_address}"
+    content = ""
+    file_permission = "0444"
+}
+
+output nginx_ip {
+    value = digitalocean_droplet.nginx.ipv4_address
+}
+
 output backend_ports {
     value = docker_container.bgg-backend[*].ports[0].external
 }
