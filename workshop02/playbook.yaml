@@ -1,9 +1,9 @@
 - name: Install Code Server 
   hosts: all
   vars:
-    cs_archive: https://github.com/coder/code-server/releases/download/v4.11.0/code-server-4.11.0-linux-amd64.tar.gz
+    cs_archive: https://github.com/coder/code-server/releases/download/v4.9.1/code-server-4.9.1-linux-amd64.tar.gz
     cs_dir: /usr/local/opt
-    cs_unpacked: code-server-4.11.0-linux-amd64
+    cs_unpacked: code-server-4.9.1-linux-amd64
   tasks:
   - name: Update OS
     apt: 
